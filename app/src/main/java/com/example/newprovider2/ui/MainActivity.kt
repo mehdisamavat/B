@@ -2,16 +2,9 @@ package com.example.newprovider2.ui
 
 import android.app.ActionBar.LayoutParams
 import android.app.Dialog
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
-import android.content.ContentValues
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -21,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.common.ProviderContract
-import com.example.data.scheduler.SchedulerService
 import com.example.newprovider2.R
 import com.example.newprovider2.databinding.ActivityMainBinding
 import com.example.newprovider2.databinding.AddDialogBinding
@@ -92,14 +83,47 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val mJobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
 
-        val builder: JobInfo.Builder = JobInfo.Builder(1, ComponentName(this, SchedulerService::class.java.name))
-        builder.setPeriodic(5 * 60 * 1000)
+//        val workQuery = WorkQuery.Builder.fromStates(
+//            listOf(
+//                WorkInfo.State.ENQUEUED,
+//                WorkInfo.State.RUNNING,
+//                WorkInfo.State.SUCCEEDED,
+//                WorkInfo.State.FAILED,
+//                WorkInfo.State.CANCELLED,
+//                WorkInfo.State.BLOCKED,
+//            )
+//        ).build()
+//
+//        WorkManager.getInstance(this).getWorkInfosLiveData(workQuery)
+//            .observe(this) { workInfoList ->
+//                workInfoList.forEach { workInfoItem ->
+//                    workInfoItem?.let { workInfo ->
+//                        when (workInfo.state) {
+//                            WorkInfo.State.ENQUEUED -> {}
+//                            WorkInfo.State.RUNNING -> {}
+//                            WorkInfo.State.SUCCEEDED -> {}
+//                            WorkInfo.State.FAILED -> {}
+//                            WorkInfo.State.BLOCKED -> {}
+//                            WorkInfo.State.CANCELLED -> {}
+//                        }
+//                    }
+//                }
+//            }
+//
 
-        if (mJobScheduler.schedule(builder.build()) <= 0) {
-            Log.i("mehdi", "fail job")
-        }
+
+//        val mJobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+//
+//        val builder: JobInfo.Builder = JobInfo.Builder(1, ComponentName(this, SchedulerService::class.java.name))
+//        builder.setPeriodic(5 * 60 * 1000)
+//        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+//
+//
+//        if (mJobScheduler.schedule(builder.build()) <= 0) {
+//            Log.i("mehdi", "fail job")
+//        }
+
 
 
 

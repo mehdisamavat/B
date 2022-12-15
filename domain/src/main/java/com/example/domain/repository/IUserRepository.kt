@@ -8,9 +8,4 @@ interface IUserRepository {
 
     fun getUser(id: Int): Flow<User?>
 
-     fun deleteUser(id: Int):Int
-
-     fun insertUser(user: User): String?
-
-     fun updateUser(user: User):Int
 }

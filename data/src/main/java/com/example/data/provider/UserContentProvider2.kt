@@ -106,6 +106,8 @@ class UserContentProvider2 : ContentProvider() {
                 val userEntity = UserEntity(id = values?.get("id").toString().toInt()
                     , name = values?.get("name").toString()
                     , checked = values?.get("checked")?.toString().toBoolean())
+                Log.i("mehdi", "update    $userEntity     2")
+
                 val count = userDao.update(userEntity)
                 if (count == 1) {
                     context!!.contentResolver.notifyChange(ContentUris.withAppendedId(uri, userEntity.id.toLong()), null)
@@ -124,6 +126,8 @@ class UserContentProvider2 : ContentProvider() {
                 count
             }
             DOMAINS_ALL_FALSE_CODE -> {
+                Log.i("mehdi", "update    all    2")
+
                 userDao.updateAllCheckedToFalse()
                 context!!.contentResolver.update(Uri.parse(ProviderContract.DOMAIN_UPDATE_URI_A), ContentValues().apply { put("from","ALL") },null,null)
             }

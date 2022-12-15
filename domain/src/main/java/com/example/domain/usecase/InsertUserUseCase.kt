@@ -1,10 +1,10 @@
 package com.example.domain.usecase
 
 import com.example.domain.model.User
-import com.example.domain.repository.IUserRepository
+import com.example.domain.repository.IContentProviderRepository
 
-class InsertUserUseCase(private val iUserRepository: IUserRepository) {
+class InsertUserUseCase(private val iContentProviderRepository: IContentProviderRepository ) {
      operator fun invoke(user: User): String? {
-      return  iUserRepository.insertUser(user)
+      return  iContentProviderRepository.insertUser(user)
     }
 }

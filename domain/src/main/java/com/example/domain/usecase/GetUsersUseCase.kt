@@ -4,8 +4,8 @@ import com.example.domain.model.User
 import com.example.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetUsersUseCase (private val iUserRepository: IUserRepository) {
+class GetUsersUseCase (private val IUserRepository: IUserRepository) {
     operator fun invoke(): Flow<List<User?>> {
-      return  iUserRepository.getUsers()
+      return  IUserRepository.getUsers()
     }
 }
