@@ -76,53 +76,14 @@ class MainActivity : AppCompatActivity() {
 
 //        contentResolver.update(Uri.parse(ProviderContract.DOMAIN_UPDATE_URI_B), ContentValues().apply { put("from","ALL") },null,null)
 
-
         mainViewModel.allUsers.observe(this) { userList ->
             userAdapter.differ.submitList(userList)
         }
 
+        mainViewModel.startSchedule()
 
 
 
-//        val workQuery = WorkQuery.Builder.fromStates(
-//            listOf(
-//                WorkInfo.State.ENQUEUED,
-//                WorkInfo.State.RUNNING,
-//                WorkInfo.State.SUCCEEDED,
-//                WorkInfo.State.FAILED,
-//                WorkInfo.State.CANCELLED,
-//                WorkInfo.State.BLOCKED,
-//            )
-//        ).build()
-//
-//        WorkManager.getInstance(this).getWorkInfosLiveData(workQuery)
-//            .observe(this) { workInfoList ->
-//                workInfoList.forEach { workInfoItem ->
-//                    workInfoItem?.let { workInfo ->
-//                        when (workInfo.state) {
-//                            WorkInfo.State.ENQUEUED -> {}
-//                            WorkInfo.State.RUNNING -> {}
-//                            WorkInfo.State.SUCCEEDED -> {}
-//                            WorkInfo.State.FAILED -> {}
-//                            WorkInfo.State.BLOCKED -> {}
-//                            WorkInfo.State.CANCELLED -> {}
-//                        }
-//                    }
-//                }
-//            }
-//
-
-
-//        val mJobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-//
-//        val builder: JobInfo.Builder = JobInfo.Builder(1, ComponentName(this, SchedulerService::class.java.name))
-//        builder.setPeriodic(5 * 60 * 1000)
-//        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
-//
-//
-//        if (mJobScheduler.schedule(builder.build()) <= 0) {
-//            Log.i("mehdi", "fail job")
-//        }
 
 
 

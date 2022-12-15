@@ -7,7 +7,7 @@ import com.example.common.ProviderContract
 import com.example.domain.model.User
 import javax.inject.Inject
 
-class ProviderManager @Inject constructor(private val contentResolver: ContentResolver) {
+class ProviderManager (private val contentResolver: ContentResolver) {
 
     fun deleteUser(id: Int): Int {
         return   contentResolver.delete(Uri.parse(ProviderContract.DOMAIN_URI_B), "id=?", arrayOf("$id"))

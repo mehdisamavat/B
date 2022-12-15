@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.ContentResolver
 import androidx.room.Room
 import com.example.data.database.MainDatabase
+import com.example.data.provider.ProviderManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +26,9 @@ object DatabaseModule {
 
     @Provides
     fun provideContentResolver(application: Application): ContentResolver = application.contentResolver
+
+
+    @Provides
+    fun providerProvideManager(contentResolver: ContentResolver) : ProviderManager = ProviderManager(contentResolver)
 
 }

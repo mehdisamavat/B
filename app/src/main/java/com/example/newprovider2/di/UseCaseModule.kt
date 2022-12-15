@@ -1,12 +1,9 @@
 package com.example.newprovider2.di
 
 import com.example.domain.repository.IContentProviderRepository
+import com.example.domain.repository.ISchedulerRepository
 import com.example.domain.repository.IUserRepository
-import com.example.domain.usecase.DeleteUserUseCase
-import com.example.domain.usecase.GetUserUseCase
-import com.example.domain.usecase.GetUsersUseCase
-import com.example.domain.usecase.InsertUserUseCase
-import com.example.domain.usecase.UpdateUserUseCase
+import com.example.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,6 +40,10 @@ object UseCaseModule {
     @Provides
     @ViewModelScoped
     fun provideGetUsersUseCase(iUserRepository: IUserRepository) = GetUsersUseCase(iUserRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideScheduleUseCase( iSchedulerRepository: ISchedulerRepository) = ScheduleUseCase(iSchedulerRepository)
 
 
 }
