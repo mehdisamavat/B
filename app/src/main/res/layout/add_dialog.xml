@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="dialogHandler"
+            type="com.example.newprovider2.ui.OnItemDialogClick" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="5dp">
+
+
+        <CheckBox
+            android:id="@+id/checkedCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/userNameEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginEnd="10dp"
+            android:checked="false"
+            app:layout_constraintRight_toLeftOf="@id/userNameEditText"
+            app:layout_constraintTop_toTopOf="@id/userNameEditText" />
+
+        <EditText
+            android:id="@+id/userNameEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintLeft_toRightOf="@id/checkedCheckBox"
+            app:layout_constraintRight_toLeftOf="@+id/submitButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_done_24"
+            android:layout_marginStart="5dp"
+            app:layout_constraintLeft_toRightOf="@+id/userNameEditText"
+            app:layout_constraintRight_toRightOf="parent"
+            android:onClick="@{(v)-> dialogHandler.submit(userNameEditText.getText().toString(),checkedCheckBox.isChecked())}"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
