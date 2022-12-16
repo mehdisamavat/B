@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="minWidth">1dp</dimen>
+
+    <dimen name="sRadius">5dp</dimen>
+    <dimen name="mRadius">10dp</dimen>
+    <dimen name="lRadius">30dp</dimen>
+
+    <dimen name="sPadding">5dp</dimen>
+    <dimen name="mPadding">10dp</dimen>
+    <dimen name="lPadding">30dp</dimen>
+
+    <dimen name="sMargin">5dp</dimen>
+    <dimen name="mMargin">10dp</dimen>
+    <dimen name="lMargin">30dp</dimen>
+
+
+    <dimen name="sFontSize">14sp</dimen>
+    <dimen name="mFontSize">15sp</dimen>
+    <dimen name="lFontSize">18sp</dimen>
+
+
+
+</resources>

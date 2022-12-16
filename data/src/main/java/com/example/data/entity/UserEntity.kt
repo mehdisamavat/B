@@ -7,5 +7,5 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val name: String,
-    var checked:Boolean
+    var checked: Boolean
 )

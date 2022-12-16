@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.newprovider2.ui.MainActivityViewModel" />
+            type="com.example.providerB.ui.MainViewModel" />
 
 
         <import type="android.view.View" />
@@ -20,7 +20,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="@dimen/sPadding">
 
         <TextView
             android:id="@+id/idTextView"
@@ -29,8 +29,9 @@
             android:text="@{Integer.valueOf(user.id).toString()}"
             app:layout_constraintBottom_toBottomOf="@+id/nameTextView"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:padding="5dp"
-            android:layout_marginStart="5dp"
+            android:padding="@dimen/sPadding"
+            android:layout_marginStart="@dimen/sMargin"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="@+id/nameTextView"
             tools:text="50" />
 
@@ -39,9 +40,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="5dp"
-            android:text="@{user.name}"
-            android:textSize="18sp"
+            android:padding="@dimen/sPadding"
+            android:text="@{user.name.empty ? `empty` :user.name}"
+            android:textSize="@dimen/lFontSize"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/idTextView"
@@ -68,6 +69,7 @@
             android:src="@drawable/ic_baseline_delete_24"
             app:layout_constraintBottom_toBottomOf="@id/nameTextView"
             app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@color/white"
             android:onClick="@{(v) -> viewModel.deleteUser(user.id)}"
             app:layout_constraintTop_toTopOf="@id/nameTextView" />
 

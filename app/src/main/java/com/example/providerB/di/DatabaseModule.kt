@@ -1,4 +1,4 @@
-package com.example.newprovider2.di
+package com.example.providerB.di
 
 import android.app.Application
 import android.content.ContentResolver
@@ -23,12 +23,5 @@ object DatabaseModule {
 
     @Provides
     fun provideUserDao(mainDatabase: MainDatabase) = mainDatabase.userDao()
-
-    @Provides
-    fun provideContentResolver(application: Application): ContentResolver = application.contentResolver
-
-
-    @Provides
-    fun providerProvideManager(contentResolver: ContentResolver) : ProviderManager = ProviderManager(contentResolver)
 
 }

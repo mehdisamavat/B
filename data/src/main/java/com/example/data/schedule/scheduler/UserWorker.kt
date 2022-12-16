@@ -1,13 +1,9 @@
 package com.example.data.schedule.scheduler
 
-import android.content.ContentValues
 import android.content.Context
-import android.net.Uri
 import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
-import com.example.common.ProviderContract
-import com.example.data.dao.UserDao
 import com.example.data.provider.ProviderManager
 import com.example.data.schedule.ScheduleManager
 import dagger.assisted.Assisted
@@ -18,17 +14,11 @@ import java.util.concurrent.TimeUnit
 class UserWorker  @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted workerParameters: WorkerParameters,
-    private val userDao: UserDao
+    private val providerManager: ProviderManager
 ) : Worker(context, workerParameters) {
     override fun doWork(): Result {
         return try {
-            userDao.getAllUsers()
-            context.contentResolver.update(
-                Uri.parse(ProviderContract.DOMAIN_UPDATE_URI_B),
-                ContentValues().apply { put("from", "ALL") },
-                null,
-                null
-            )
+            providerManager.updateCheckedAllUser("B")
             Log.i("mehdi", "success")
             Result.success()
         } catch (e: Exception) {

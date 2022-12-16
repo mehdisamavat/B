@@ -15,6 +15,7 @@ class SchedulerService : JobService() {
         jobFinished(params,true)
         return true
     }
+
     override fun onStopJob(params: JobParameters): Boolean {
         return false
     }

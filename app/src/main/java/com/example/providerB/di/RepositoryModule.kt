@@ -1,4 +1,4 @@
-package com.example.newprovider2.di
+package com.example.providerB.di
 
 import com.example.data.dao.UserDao
 import com.example.data.provider.ProviderManager

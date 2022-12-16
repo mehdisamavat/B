@@ -7,7 +7,7 @@
 
         <variable
             name="dialogHandler"
-            type="com.example.newprovider2.ui.OnItemDialogClick" />
+            type="com.example.providerA.ui.dialog.OnSubmitDialogClick" />
 
         <import type="android.view.View" />
 
@@ -16,40 +16,55 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="5dp">
+        android:padding="@dimen/sPadding">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleTextView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/enter_user_info"
+            android:textStyle="bold"
+            android:padding="@dimen/mPadding"
+            android:textSize="@dimen/mFontSize"
+            android:gravity="center"/>
 
 
         <CheckBox
             android:id="@+id/checkedCheckBox"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/mMargin"
+            android:checked="false"
             app:layout_constraintBottom_toBottomOf="@id/userNameEditText"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginEnd="10dp"
-            android:checked="false"
             app:layout_constraintRight_toLeftOf="@id/userNameEditText"
-            app:layout_constraintTop_toTopOf="@id/userNameEditText" />
+           app:layout_constraintTop_toTopOf="@+id/userNameEditText" />
 
         <EditText
             android:id="@+id/userNameEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text=""
-            app:layout_constraintLeft_toRightOf="@id/checkedCheckBox"
-            app:layout_constraintRight_toLeftOf="@+id/submitButton"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintLeft_toRightOf="@id/checkedCheckBox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
 
         <ImageButton
             android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{(v)-> dialogHandler.onSubmit(userNameEditText.getText().toString(),checkedCheckBox.isChecked())}"
             android:src="@drawable/ic_baseline_done_24"
-            android:layout_marginStart="5dp"
-            app:layout_constraintLeft_toRightOf="@+id/userNameEditText"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:onClick="@{(v)-> dialogHandler.submit(userNameEditText.getText().toString(),checkedCheckBox.isChecked())}"
+            android:background="@drawable/bg_btn"
+            android:paddingVertical="@dimen/mPadding"
+            android:paddingHorizontal="@dimen/lPadding"
+            app:layout_constraintTop_toBottomOf="@+id/userNameEditText"
             tools:ignore="MissingConstraints" />
 
 

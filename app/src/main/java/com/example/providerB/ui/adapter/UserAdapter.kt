@@ -1,4 +1,4 @@
-package com.example.newprovider2.ui
+package com.example.providerA.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newprovider2.databinding.DataItemBinding
 import com.example.domain.model.User
+import com.example.providerB.databinding.DataItemBinding
+import com.example.providerB.ui.MainViewModel
+
 
 class UserAdapter(
-    private val mainViewModel: MainActivityViewModel,
+    private val mainViewModel: MainViewModel,
     private val lifecycleOwner: LifecycleOwner,
 ) :
     RecyclerView.Adapter<UserAdapter.DataViewHolder>() {
@@ -18,9 +20,13 @@ class UserAdapter(
 
     class DataViewHolder(private var binding: DataItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User, mainViewModel: MainActivityViewModel, lifecycleOwner: LifecycleOwner,) {
+        fun bind(
+            user: User,
+            mainViewModel: MainViewModel,
+            lifecycleOwner: LifecycleOwner,
+        ) {
             binding.user = user
-            binding.viewModel=mainViewModel
+            binding.viewModel = mainViewModel
             binding.lifecycleOwner = lifecycleOwner
             binding.executePendingBindings()
         }
@@ -37,7 +43,7 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(differ.currentList[position]!!,mainViewModel,lifecycleOwner)
+        holder.bind(differ.currentList[position]!!, mainViewModel, lifecycleOwner)
     }
 
     override fun getItemCount(): Int {
@@ -45,9 +51,9 @@ class UserAdapter(
     }
 
 
-    private val differCallback = object : DiffUtil.ItemCallback<User>(){
+    private val differCallback = object : DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-            return  oldItem.id == newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
@@ -56,7 +62,7 @@ class UserAdapter(
 
     }
 
-    val differ = AsyncListDiffer(this,differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
 }
 

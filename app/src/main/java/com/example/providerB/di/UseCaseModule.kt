@@ -1,4 +1,4 @@
-package com.example.newprovider2.di
+package com.example.providerB.di
 
 import com.example.domain.repository.IContentProviderRepository
 import com.example.domain.repository.ISchedulerRepository

@@ -12,7 +12,6 @@ import com.example.common.ProviderContract.DOMAINS_ALL_FALSE_CODE
 import com.example.common.ProviderContract.DOMAINS_CODE
 import com.example.common.ProviderContract.DOMAINS_ITEM
 import com.example.common.ProviderContract.DOMAINS_ITEM_CODE
-import com.example.common.ProviderContract.DOMAIN_UPDATE_URI_B
 import com.example.data.dao.UserDao
 import com.example.data.entity.UserEntity
 import dagger.hilt.EntryPoint
@@ -21,12 +20,13 @@ import dagger.hilt.android.EntryPointAccessors.fromApplication
 import dagger.hilt.components.SingletonComponent
 
 
-class UserContentProvider2 : ContentProvider() {
+class UserContentProviderB : ContentProvider() {
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface ContentProviderEntryPoint {
         fun getDao(): UserDao
+        fun getProviderManager():ProviderManager
     }
 
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
@@ -35,12 +35,14 @@ class UserContentProvider2 : ContentProvider() {
         addURI(AUTHORITY_B, DOMAINS_ALL_FALSE, DOMAINS_ALL_FALSE_CODE)
     }
     lateinit var userDao: UserDao
+    lateinit var providerManager: ProviderManager
     private lateinit var appContext: Context
     override fun onCreate(): Boolean {
 
         appContext = context?.applicationContext ?: throw IllegalStateException()
         val hiltEntryPoint = fromApplication(appContext, ContentProviderEntryPoint::class.java)
         userDao = hiltEntryPoint.getDao()
+        providerManager=hiltEntryPoint.getProviderManager()
 
         return true
     }
@@ -82,13 +84,10 @@ class UserContentProvider2 : ContentProvider() {
                 val rowId = userDao.insert(userEntity)
                 val finalUri = ContentUris.withAppendedId(uri, rowId)
                 context!!.contentResolver.notifyChange(finalUri, null)
+
                 if (values?.get("from").toString() == "B")
-                context!!. contentResolver.insert(Uri.parse(ProviderContract.DOMAIN_URI_A),ContentValues().apply {
-                    put("id",rowId)
-                    put("name",userEntity.name)
-                    put("checked",userEntity.checked)
-                    put("from","B")
-                })
+                    providerManager.insertUserToA(rowId.toInt(),userEntity.name,userEntity.checked,"B")
+
                 finalUri
             }
             else -> null
@@ -113,12 +112,7 @@ class UserContentProvider2 : ContentProvider() {
                     context!!.contentResolver.notifyChange(ContentUris.withAppendedId(uri, userEntity.id.toLong()), null)
                  when(values?.get("from")?.toString()){
                      "B" -> {
-                         context!!.contentResolver.update(Uri.parse(ProviderContract.DOMAIN_URI_A), ContentValues().apply {
-                             put("id",userEntity.id.toString())
-                             put("name",userEntity.name)
-                             put("checked",userEntity.checked)
-                             put("from","B")
-                         },null,null)
+                 providerManager.updateUserToA(userEntity.id,userEntity.name,userEntity.checked,"B")
                      }
 
                  }
@@ -127,9 +121,8 @@ class UserContentProvider2 : ContentProvider() {
             }
             DOMAINS_ALL_FALSE_CODE -> {
                 Log.i("mehdi", "update    all    2")
-
                 userDao.updateAllCheckedToFalse()
-                context!!.contentResolver.update(Uri.parse(ProviderContract.DOMAIN_UPDATE_URI_A), ContentValues().apply { put("from","ALL") },null,null)
+               providerManager.updateCheckedAllUser("A")
             }
             else -> 0
         }
@@ -143,16 +136,7 @@ class UserContentProvider2 : ContentProvider() {
                 val count = userDao.deleteById(selectionArgs?.get(0)?.toInt()!!)
                 if (count == 1) {
                     context!!.contentResolver.notifyChange(ContentUris.withAppendedId(uri, id?.toLong()!!), null)
-
-                context!!.contentResolver!!.query( Uri.withAppendedPath(Uri.parse(ProviderContract.DOMAIN_URI_A),id.toString()), null, null, null, null)?.apply {
-                val idIndex = getColumnIndex("id")
-                    while (moveToNext()) {
-                         if (getInt(idIndex) == id)
-                             context!!.contentResolver.delete(Uri.parse(ProviderContract.DOMAIN_URI_A), "id=?", arrayOf("$id"))
-                    }
-                    close()
-                }
-
+                    providerManager.deleteUser(id,"A")
                 }
                 count
             }

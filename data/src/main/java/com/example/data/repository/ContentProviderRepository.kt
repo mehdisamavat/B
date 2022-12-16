@@ -6,15 +6,16 @@ import com.example.domain.repository.IContentProviderRepository
 
 class ContentProviderRepository(private val providerManager: ProviderManager): IContentProviderRepository {
     override  fun deleteUser(id: Int): Int {
-        return   providerManager.deleteUser(id)
+        return   providerManager.deleteUser(id,"B")
     }
 
-    override  fun insertUser(user: User): String? {
-        return providerManager.insertUser(user)
+    override fun insertUser(name: String, checked: Boolean): String? {
+        return providerManager.insertUser(name = name, checked = checked, to = "B")
     }
 
-    override  fun updateUser(user: User) :Int{
-        return  providerManager.updateUser(user)
+    override fun updateUser(id: Int, name: String, checked: Boolean): Int {
+        return  providerManager.updateUser(id,name,checked)
     }
+
 
 }

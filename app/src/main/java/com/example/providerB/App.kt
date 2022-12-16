@@ -1,4 +1,4 @@
-package com.example.newprovider2
+package com.example.providerB
 
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory

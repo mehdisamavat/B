@@ -1,4 +1,4 @@
-package com.example.newprovider2.ui
+package com.example.providerB.ui
 
 import androidx.lifecycle.*
 import com.example.domain.model.User
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
+class MainViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
     getUsersUseCase: GetUsersUseCase,
     private val insertUserUseCase: InsertUserUseCase,
@@ -21,7 +21,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun insertUser( name: String, checked: Boolean)  {
         viewModelScope.launch(Dispatchers.IO) {
-            insertUserUseCase.invoke(User(name = name, checked = checked))
+            insertUserUseCase.invoke(name = name, checked = checked)
         }
     }
 
@@ -41,7 +41,7 @@ class MainActivityViewModel @Inject constructor(
 
     fun updateUser(id: Int, name: String, checked: Boolean) {
         viewModelScope.launch {
-            updateUserUseCase.invoke(User(id, name, checked))
+            updateUserUseCase.invoke(id, name, checked)
         }
     }
 

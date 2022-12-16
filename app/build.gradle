@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.newprovider2'
+    namespace 'com.example.providerB'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.newprovider2"
+        applicationId "com.example.providerB"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -21,7 +21,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('/Users/mehdisamavat/AndroidStudioProjects/NewProvider2/app/keystoresadad')
+            storeFile file('/Users/mehdisamavat/AndroidStudioProjects/providerB/app/keystoresadad')
             storePassword '123456'
             keyAlias 'key0'
             keyPassword '123456'
@@ -34,13 +34,13 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [store_app: "com.example.newprovider"]
+            manifestPlaceholders = [store_app: "com.example.providerA"]
 
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [store_app: "com.example.newprovider"]
+            manifestPlaceholders = [store_app: "com.example.providerA"]
 
         }
     }

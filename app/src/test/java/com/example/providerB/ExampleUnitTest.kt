@@ -1,4 +1,4 @@
-package com.example.newprovider2
+package com.example.providerB
 
 import org.junit.Test
 

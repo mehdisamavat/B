@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "NewProvider2"
+rootProject.name = "ProviderB"
 include ':app'
 include ':common'
 include ':data'
