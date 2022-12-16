@@ -12,6 +12,7 @@
     </queries>
 
     <uses-permission android:name="custom.permission.CONTENT_PROVIDER" android:protectionLevel="signature" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -38,7 +39,7 @@
         </activity>
 
         <provider
-            android:name="com.example.data.provider.UserContentProviderB"
+            android:name="com.example.data.local.provider.UserContentProviderB"
             android:authorities="com.example.providerB"
             android:exported="true"
             android:permission="custom.permission.CONTENT_PROVIDER_B"

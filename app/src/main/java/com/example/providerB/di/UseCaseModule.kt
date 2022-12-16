@@ -2,7 +2,8 @@ package com.example.providerB.di
 
 import com.example.domain.repository.IContentProviderRepository
 import com.example.domain.repository.ISchedulerRepository
-import com.example.domain.repository.IUserRepository
+import com.example.domain.repository.IUserLocalRepository
+import com.example.domain.repository.IUserRemoteRepository
 import com.example.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -34,12 +35,16 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideGetUserUseCase(iUserRepository: IUserRepository) = GetUserUseCase(iUserRepository)
+    fun provideGetUserUseCase(iUserLocalRepository: IUserLocalRepository) = GetUserUseCase(iUserLocalRepository)
 
 
     @Provides
     @ViewModelScoped
-    fun provideGetUsersUseCase(iUserRepository: IUserRepository) = GetUsersUseCase(iUserRepository)
+    fun provideGetUsersUseCase(iUserLocalRepository: IUserLocalRepository) = GetUsersUseCase(iUserLocalRepository)
+
+    @Provides
+    @ViewModelScoped
+    fun provideGetUsersRemoteUseCase(iUserRemoteRepository: IUserRemoteRepository) = UploadDataUseCase(iUserRemoteRepository)
 
     @Provides
     @ViewModelScoped

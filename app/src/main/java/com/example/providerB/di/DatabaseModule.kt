@@ -3,8 +3,8 @@ package com.example.providerB.di
 import android.app.Application
 import android.content.ContentResolver
 import androidx.room.Room
-import com.example.data.database.MainDatabase
-import com.example.data.provider.ProviderManager
+import com.example.data.local.database.MainDatabase
+import com.example.data.local.provider.ProviderManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

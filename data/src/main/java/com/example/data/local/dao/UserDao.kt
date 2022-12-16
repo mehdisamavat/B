@@ -1,4 +1,4 @@
-package com.example.data.dao
+package com.example.data.local.dao
 
 import android.database.Cursor
 import androidx.room.*
@@ -28,6 +28,8 @@ interface UserDao {
     @Query(value = "SELECT * FROM UserEntity WHERE id=:id")
     fun selectById(id: Int): Cursor
 
+    @Query(value = "SELECT * FROM UserEntity ")
+    fun getAll(): List<UserEntity>
 
     @Query(value = "SELECT * FROM UserEntity ")
     fun getAllUsers(): Flow<List<UserEntity>>

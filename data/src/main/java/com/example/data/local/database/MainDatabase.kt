@@ -1,10 +1,10 @@
-package com.example.data.database
+package com.example.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.data.dao.UserDao
+import com.example.data.local.dao.UserDao
 import com.example.data.entity.UserEntity
 
 @Database(entities = [UserEntity::class], version = 2)

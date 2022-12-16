@@ -7,5 +7,10 @@
         android:icon="@drawable/ic_baseline_add_24"
         android:title=""
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_upload"
+        android:icon="@drawable/ic_baseline_cloud_upload_24"
+        android:title=""
+        app:showAsAction="ifRoom"/>
 
 </menu>

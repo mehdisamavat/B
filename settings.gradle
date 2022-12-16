@@ -14,6 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ProviderB"
 include ':app'
-include ':common'
 include ':data'
 include ':domain'

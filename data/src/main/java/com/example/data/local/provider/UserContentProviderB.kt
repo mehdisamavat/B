@@ -1,19 +1,10 @@
-package com.example.data.provider
+package com.example.data.local.provider
 
 import android.content.*
 import android.database.Cursor
 import android.net.Uri
-import android.util.Log
-import com.example.common.ProviderContract
-import com.example.common.ProviderContract.AUTHORITY_B
-import com.example.common.ProviderContract.DOMAINS
-import com.example.common.ProviderContract.DOMAINS_ALL_FALSE
-import com.example.common.ProviderContract.DOMAINS_ALL_FALSE_CODE
-import com.example.common.ProviderContract.DOMAINS_CODE
-import com.example.common.ProviderContract.DOMAINS_ITEM
-import com.example.common.ProviderContract.DOMAINS_ITEM_CODE
-import com.example.data.dao.UserDao
 import com.example.data.entity.UserEntity
+import com.example.data.local.dao.UserDao
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors.fromApplication
@@ -26,7 +17,7 @@ class UserContentProviderB : ContentProvider() {
     @InstallIn(SingletonComponent::class)
     interface ContentProviderEntryPoint {
         fun getDao(): UserDao
-        fun getProviderManager():ProviderManager
+        fun getProviderManager(): ProviderManager
     }
 
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
@@ -78,15 +69,15 @@ class UserContentProviderB : ContentProvider() {
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         return when (uriMatcher.match(uri)) {
             DOMAINS_CODE -> {
-                val userEntity = UserEntity(id =  values?.get("id").toString().toInt(), name = values?.get("name").toString(), checked = values?.get("checked").toString().toBoolean() )
-                Log.i("mehdi", "insert    $userEntity   ${values?.get("from")}   2")
+                val userEntity = UserEntity(id =  values?.get(ID_KEY).toString().toInt(), name = values?.get(
+                    NAME_KEY).toString(), checked = values?.get(CHECKED_KEY).toString().toBoolean() )
 
                 val rowId = userDao.insert(userEntity)
                 val finalUri = ContentUris.withAppendedId(uri, rowId)
                 context!!.contentResolver.notifyChange(finalUri, null)
 
-                if (values?.get("from").toString() == "B")
-                    providerManager.insertUserToA(rowId.toInt(),userEntity.name,userEntity.checked,"B")
+                if (values?.get(FROM_KEY).toString() == PROVIDER_B)
+                    providerManager.insertUserToA(rowId.toInt(),userEntity.name,userEntity.checked,values?.get(FROM_KEY).toString())
 
                 finalUri
             }
@@ -102,17 +93,16 @@ class UserContentProviderB : ContentProvider() {
     ): Int {
         return when (uriMatcher.match(uri)) {
             DOMAINS_CODE -> {
-                val userEntity = UserEntity(id = values?.get("id").toString().toInt()
-                    , name = values?.get("name").toString()
-                    , checked = values?.get("checked")?.toString().toBoolean())
-                Log.i("mehdi", "update    $userEntity     2")
+                val userEntity = UserEntity(id = values?.get(ID_KEY).toString().toInt()
+                    , name = values?.get(NAME_KEY).toString()
+                    , checked = values?.get(CHECKED_KEY)?.toString().toBoolean())
 
                 val count = userDao.update(userEntity)
                 if (count == 1) {
                     context!!.contentResolver.notifyChange(ContentUris.withAppendedId(uri, userEntity.id.toLong()), null)
-                 when(values?.get("from")?.toString()){
-                     "B" -> {
-                 providerManager.updateUserToA(userEntity.id,userEntity.name,userEntity.checked,"B")
+                 when(values?.get(FROM_KEY)?.toString()){
+                     PROVIDER_B -> {
+                         providerManager.updateUserToA(userEntity.id,userEntity.name,userEntity.checked,values.get(FROM_KEY).toString())
                      }
 
                  }
@@ -120,9 +110,8 @@ class UserContentProviderB : ContentProvider() {
                 count
             }
             DOMAINS_ALL_FALSE_CODE -> {
-                Log.i("mehdi", "update    all    2")
                 userDao.updateAllCheckedToFalse()
-               providerManager.updateCheckedAllUser("A")
+               providerManager.updateCheckedAllUser(DOMAIN_UPDATE_URI_A)
             }
             else -> 0
         }
@@ -132,16 +121,45 @@ class UserContentProviderB : ContentProvider() {
         return when (uriMatcher.match(uri)) {
             DOMAINS_CODE -> {
                val id= selectionArgs?.get(0)?.toInt()
-                Log.i("mehdi", "delete    $id   2")
                 val count = userDao.deleteById(selectionArgs?.get(0)?.toInt()!!)
                 if (count == 1) {
                     context!!.contentResolver.notifyChange(ContentUris.withAppendedId(uri, id?.toLong()!!), null)
-                    providerManager.deleteUser(id,"A")
+                    providerManager.deleteUser(DOMAIN_URI_A,id)
                 }
                 count
             }
             else -> 0
         }
+    }
+
+    companion object{
+        const val DOMAINS = "domains"
+        const val DOMAINS_ITEM = "domains/#"
+        const val DOMAINS_ALL_FALSE = "domainsAllFalse"
+
+        const val DOMAINS_CODE = 10
+        const val DOMAINS_ITEM_CODE = 11
+        const val DOMAINS_ALL_FALSE_CODE = 12
+
+        private const val PROVIDER_A = "providerA"
+        const val PROVIDER_B = "providerB"
+
+        private const val AUTHORITY_A = "com.example.$PROVIDER_A"
+        const val AUTHORITY_B = "com.example.$PROVIDER_B"
+
+        const val DOMAIN_URI_A = "content://$AUTHORITY_A/$DOMAINS"
+        const val DOMAIN_URI_B = "content://$AUTHORITY_B/$DOMAINS"
+
+        const val DOMAIN_UPDATE_URI_A = "content://$AUTHORITY_A/$DOMAINS_ALL_FALSE"
+        const val DOMAIN_UPDATE_URI_B = "content://$AUTHORITY_B/$DOMAINS_ALL_FALSE"
+
+
+        const val ID_KEY = "id"
+        const val NAME_KEY = "name"
+        const val CHECKED_KEY = "checked"
+        const val FROM_KEY = "from"
+        const val ALL_KEY = "all"
+
     }
 
 

@@ -5,13 +5,15 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.ContentValues
 import android.net.Uri
-import com.example.common.ProviderContract
+import com.example.data.local.provider.UserContentProviderB.Companion.ALL_KEY
+import com.example.data.local.provider.UserContentProviderB.Companion.DOMAIN_UPDATE_URI_B
+import com.example.data.local.provider.UserContentProviderB.Companion.FROM_KEY
 
 @SuppressLint("SpecifyJobSchedulerIdRange")
 class SchedulerService : JobService() {
 
     override fun onStartJob(params: JobParameters): Boolean {
-        contentResolver.update(Uri.parse(ProviderContract.DOMAIN_UPDATE_URI_B), ContentValues().apply { put("from","ALL") },null,null)
+        contentResolver.update(Uri.parse(DOMAIN_UPDATE_URI_B), ContentValues().apply { put(FROM_KEY,ALL_KEY) },null,null)
         jobFinished(params,true)
         return true
     }

@@ -24,8 +24,7 @@ class ScheduleManager @Inject constructor(@ApplicationContext val context: Conte
             .addTag(SCHEDULE_TAG)
             .setInitialDelay(DURATION_WORK, TimeUnit.MINUTES)
             .build()
-        WorkManager.getInstance(context).enqueueUniqueWork("falser", ExistingWorkPolicy.KEEP, falseWorkerRequest)
-        Log.i("mehdi","startWorkManager")
+        WorkManager.getInstance(context).enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.KEEP, falseWorkerRequest)
     }
 
     fun startScheduleWithJobService() {
@@ -41,7 +40,8 @@ class ScheduleManager @Inject constructor(@ApplicationContext val context: Conte
     companion object {
         const val SCHEDULE_TAG = "com.example.data.schedule"
         const val INTERVAL_MILLIS = (5 * 60 * 1000).toLong()
-        const val DURATION_WORK = 1L
+        const val DURATION_WORK = 3L
+        const val WORK_NAME = "falser"
     }
 
 

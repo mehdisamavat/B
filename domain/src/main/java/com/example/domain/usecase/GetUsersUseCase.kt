@@ -1,11 +1,11 @@
 package com.example.domain.usecase
 
 import com.example.domain.model.User
-import com.example.domain.repository.IUserRepository
+import com.example.domain.repository.IUserLocalRepository
 import kotlinx.coroutines.flow.Flow
 
-class GetUsersUseCase (private val IUserRepository: IUserRepository) {
+class GetUsersUseCase (private val iUserLocalRepository: IUserLocalRepository) {
     operator fun invoke(): Flow<List<User?>> {
-      return  IUserRepository.getUsers()
+      return  iUserLocalRepository.getUsers()
     }
 }

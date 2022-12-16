@@ -1,10 +1,19 @@
 package com.example.providerB.ui
 
+import android.R.menu
+import android.app.ActionBar.LayoutParams
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuItemCompat
+import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
     private lateinit var userAdapter: UserAdapter
+    private lateinit var uploadMenuItem:MenuItem
     private val addDialog: AddDialog by lazy {
         AddDialog(this, object : OnSubmitDialogClick {
             override fun onSubmit(name: String, checked: Boolean) {
@@ -37,6 +47,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
+        mainViewModel.uploadStateResponse.observe(this){
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+            uploadMenuItem.actionView = null
+        }
+
         userAdapter = UserAdapter(mainViewModel, this)
 
         binding.itemRecyclerView.apply {
@@ -49,9 +64,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainViewModel.startSchedule()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+
+
         menuInflater.inflate(R.menu.menu_item, menu)
         return true
     }
@@ -60,6 +79,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_add -> {
                 addDialog.show()
+                true
+            }
+            R.id.menu_upload -> {
+                uploadMenuItem=item
+                mainViewModel.uploadData()
+                item.setActionView(R.layout.progress)
                 true
             }
             else -> super.onOptionsItemSelected(item)
