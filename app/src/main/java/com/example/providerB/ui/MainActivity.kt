@@ -1,19 +1,11 @@
 package com.example.providerB.ui
 
-import android.R.menu
-import android.app.ActionBar.LayoutParams
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuItemCompat
-import androidx.core.view.setPadding
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -47,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding.root)
 
-        mainViewModel.uploadStateResponse.observe(this){
+        mainViewModel.stateResponse.observe(this){
             Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
             uploadMenuItem.actionView = null
         }

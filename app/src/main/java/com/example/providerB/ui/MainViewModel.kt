@@ -1,7 +1,9 @@
 package com.example.providerB.ui
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.data.onError
 import com.example.data.onException
 import com.example.data.onSuccess
@@ -15,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
     getUsersUseCase: GetUsersUseCase,
     private val insertUserUseCase: InsertUserUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
@@ -24,54 +25,62 @@ class MainViewModel @Inject constructor(
     private val uploadDataUseCase: UploadDataUseCase,
 ) : ViewModel() {
 
-    val uploadStateResponse = SingleLiveEvent<String>()
+    val stateResponse = SingleLiveEvent<String>()
 
 
-    fun insertUser( name: String, checked: Boolean)  {
+    fun insertUser(name: String, checked: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            insertUserUseCase.invoke(name = name, checked = checked)
-        }
-    }
+            try {
+                insertUserUseCase.invoke(name = name, checked = checked)
+            } catch (e: Exception) {
+                stateResponse.postValue(e.message)
+            }
 
-    fun uploadData(id: Int) = liveData(Dispatchers.IO)  {
-        emit(getUserUseCase.invoke(id).asLiveData())
+        }
     }
 
     val allUsers: LiveData<List<User?>> = getUsersUseCase().asLiveData()
 
-
-
     fun deleteUser(id: Int) {
-        viewModelScope.launch(Dispatchers.IO)  {
-            deleteUserUseCase.invoke(id)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                deleteUserUseCase.invoke(id)
+            } catch (e: Exception) {
+                stateResponse.postValue(e.message)
+            }
+
         }
     }
 
     fun updateUser(id: Int, name: String, checked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO)  {
-            updateUserUseCase.invoke(id, name, checked)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                updateUserUseCase.invoke(id, name, checked)
+            } catch (e: Exception) {
+                stateResponse.postValue(e.message)
+            }
+
         }
     }
 
-    fun startSchedule(){
-        viewModelScope.launch(Dispatchers.IO)  {
+    fun startSchedule() {
+        viewModelScope.launch(Dispatchers.IO) {
             scheduleUseCase.invoke()
         }
     }
 
-    fun uploadData(){
+    fun uploadData() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = uploadDataUseCase.invoke()
             response.onSuccess {
-                uploadStateResponse.postValue("Success")
+                stateResponse.postValue("Success")
             }.onError { code, message ->
-                uploadStateResponse.postValue("Error = $code  $message")
+                stateResponse.postValue("Error = $code  $message")
             }.onException {
-                uploadStateResponse.postValue("Exception =  ${it.message}")
+                stateResponse.postValue("Exception =  ${it.message}")
             }
         }
     }
-
 
 
 }
