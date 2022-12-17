@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.stateResponse.observe(this){
             Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
-            uploadMenuItem.actionView = null
+           if (this::uploadMenuItem.isInitialized) uploadMenuItem.actionView = null
         }
 
         userAdapter = UserAdapter(mainViewModel, this)
