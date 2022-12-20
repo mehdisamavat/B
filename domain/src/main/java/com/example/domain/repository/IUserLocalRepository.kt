@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface IUserLocalRepository {
     fun getUsers(): Flow<List<User?>>
 
-    fun getUser(id: Int): Flow<User?>
+    fun deleteUser(id: Int):Int
+
+    fun updateUser(id: Int,name:String,checked:Boolean):Int
 
 }

@@ -23,15 +23,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel by viewModels<MainViewModel>()
     private lateinit var userAdapter: UserAdapter
-    private lateinit var uploadMenuItem:MenuItem
-    private val addDialog: AddDialog by lazy {
-        AddDialog(this, object : OnSubmitDialogClick {
-            override fun onSubmit(name: String, checked: Boolean) {
-                mainViewModel.insertUser(name, checked)
-                addDialog.dismiss()
-            }
-        })
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.stateResponse.observe(this){
             Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
-           if (this::uploadMenuItem.isInitialized) uploadMenuItem.actionView = null
         }
 
         userAdapter = UserAdapter(mainViewModel, this)
@@ -55,33 +45,6 @@ class MainActivity : AppCompatActivity() {
             userAdapter.differ.submitList(userList)
         }
 
-        mainViewModel.startSchedule()
-
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-
-
-        menuInflater.inflate(R.menu.menu_item, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_add -> {
-                addDialog.show()
-                true
-            }
-            R.id.menu_upload -> {
-                uploadMenuItem=item
-                mainViewModel.uploadData()
-                item.setActionView(R.layout.progress)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
 
 }

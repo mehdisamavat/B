@@ -18,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
-    private val insertUserUseCase: InsertUserUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
     private val updateUserUseCase: UpdateUserUseCase,
     private val scheduleUseCase: ScheduleUseCase,
@@ -26,18 +25,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     val stateResponse = SingleLiveEvent<String>()
-
-
-    fun insertUser(name: String, checked: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                insertUserUseCase.invoke(name = name, checked = checked)
-            } catch (e: Exception) {
-                stateResponse.postValue(e.message)
-            }
-
-        }
-    }
 
     val allUsers: LiveData<List<User?>> = getUsersUseCase().asLiveData()
 
@@ -63,24 +50,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun startSchedule() {
-        viewModelScope.launch(Dispatchers.IO) {
-            scheduleUseCase.invoke()
-        }
-    }
 
-    fun uploadData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = uploadDataUseCase.invoke()
-            response.onSuccess {
-                stateResponse.postValue("Success")
-            }.onError { code, message ->
-                stateResponse.postValue("Error = $code  $message")
-            }.onException {
-                stateResponse.postValue("Exception =  ${it.message}")
-            }
-        }
-    }
+
 
 
 }

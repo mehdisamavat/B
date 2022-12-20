@@ -10,4 +10,10 @@ object UserMapper {
         }
     }
 
+    fun User?.toEntity(): UserEntity? {
+        return this?.let {
+            UserEntity(id = it.id, name = it.name, checked = it.checked)
+        }
+    }
+
 }
