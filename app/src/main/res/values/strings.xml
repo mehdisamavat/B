@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Provider B</string>
-    <string name="enter_user_info">"نام و وضعیت کاربر را وارد کنید "</string>
+    <string name="listening_to_provider">Listening…</string>
+    <string name="upload_error">Exception Uploading</string>
 </resources>

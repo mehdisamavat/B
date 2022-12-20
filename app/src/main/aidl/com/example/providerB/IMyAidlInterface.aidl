@@ -10,8 +10,4 @@ interface IMyAidlInterface {
      */
     void getData(  String aString  , boolean aBoolean);
     void stopService();
-
-
-
-
 }

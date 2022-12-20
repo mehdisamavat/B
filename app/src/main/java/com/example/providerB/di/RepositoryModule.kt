@@ -14,7 +14,6 @@ import com.example.domain.usecase.UploadDataUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -29,24 +28,25 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRemoteRepository(apiService: ApiService, userDao: UserDao): IUserRemoteRepository =
+    fun provideUserRemoteRepository(
+        apiService: ApiService, ): IUserRemoteRepository =
         UserRemoteRepository(apiService)
 
     @Provides
     @Singleton
-    fun provideSchedulerRepository(scheduleManager: ScheduleManager) :ISchedulerRepository =
+    fun provideSchedulerRepository(scheduleManager: ScheduleManager): ISchedulerRepository =
         SchedulerRepository(scheduleManager)
 
 
     @Provides
     @Singleton
-    fun provideScheduleUseCase( iSchedulerRepository: ISchedulerRepository) = ScheduleUseCase(iSchedulerRepository)
+    fun provideScheduleUseCase(iSchedulerRepository: ISchedulerRepository) =
+        ScheduleUseCase(iSchedulerRepository)
 
     @Provides
     @Singleton
-    fun provideUploadUseCase(iUserRemoteRepository: IUserRemoteRepository) = UploadDataUseCase(iUserRemoteRepository)
-
-
+    fun provideUploadUseCase(iUserRemoteRepository: IUserRemoteRepository) =
+        UploadDataUseCase(iUserRemoteRepository)
 
 
 }

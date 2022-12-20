@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.data.onError
-import com.example.data.onException
-import com.example.data.onSuccess
 import com.example.domain.model.User
-import com.example.domain.usecase.*
+import com.example.domain.usecase.DeleteUserUseCase
+import com.example.domain.usecase.GetUsersUseCase
+import com.example.domain.usecase.UpdateUserUseCase
 import com.example.providerB.ui.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,9 +18,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     getUsersUseCase: GetUsersUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
-    private val updateUserUseCase: UpdateUserUseCase,
-    private val scheduleUseCase: ScheduleUseCase,
-    private val uploadDataUseCase: UploadDataUseCase,
+    private val updateUserUseCase: UpdateUserUseCase
 ) : ViewModel() {
 
     val stateResponse = SingleLiveEvent<String>()
@@ -49,9 +46,6 @@ class MainViewModel @Inject constructor(
 
         }
     }
-
-
-
 
 
 }

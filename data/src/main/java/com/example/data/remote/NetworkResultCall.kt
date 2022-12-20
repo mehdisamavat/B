@@ -1,6 +1,5 @@
 package com.example.data.remote
 
-import com.example.data.handleApi
 import com.example.domain.NetworkResult
 import okhttp3.Request
 import okio.Timeout
@@ -30,5 +29,7 @@ class NetworkResultCall<T : Any>(private val proxy: Call<T>) : Call<NetworkResul
     override fun timeout(): Timeout = proxy.timeout()
     override fun isExecuted(): Boolean = proxy.isExecuted
     override fun isCanceled(): Boolean = proxy.isCanceled
-    override fun cancel() { proxy.cancel() }
+    override fun cancel() {
+        proxy.cancel()
+    }
 }
